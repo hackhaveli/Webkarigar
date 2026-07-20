@@ -1,5 +1,30 @@
 import crypto from 'crypto';
 import { supabase } from './supabase';
+import { getSystemSettings } from '../system-settings';
+
+const DEFAULT_META_TOKEN =
+  'EAAOq9OGZCu9EBSEbYITNZC7Yw8yBJhVMutPXWGwTJHbg9rXdieVBN8WWJXpZBUQqt3ZBAIGO3mO2P3N2IORHDc5r1cIdk0RenlWBjmZCKKMNxah9Bjx3CWwXH22KCdFsZCmzMo3MgR5vQDC228rZAdYqv5f98u8uPxzCkr9BLy5rc1f39y3Q7lYVgjtRNFZAR7SzTjMvivzuMxOaovgDuEKVXcA6wQZB5iKHdZCyTgihdFNfqfhKKb8jt9qOGkXbHnAORwJB0oQjdL194DDYsBtm0vlcyw10UZAWZCRK2gZDZD';
+
+async function getMetaAccessToken(): Promise<string> {
+  try {
+    const settings = await getSystemSettings();
+    if (settings.metaAdsApiKey && settings.metaAdsApiKey.trim().length > 10) {
+      return settings.metaAdsApiKey.trim();
+    }
+  } catch (err) {
+    console.error('Failed to read system settings for Meta token:', err);
+  }
+
+  const envToken =
+    process.env.META_ACCESS_TOKEN ||
+    process.env.META_ADS_API_KEY ||
+    process.env.FACEBOOK_ACCESS_TOKEN;
+  if (envToken && envToken.trim().length > 10) {
+    return envToken.trim();
+  }
+
+  return DEFAULT_META_TOKEN;
+}
 
 function createAdHash(pageId: string, adText: string) {
   const str = `${pageId || ''}|${adText || ''}`;
@@ -12,10 +37,7 @@ export async function scrapeAndStore(
   country = 'IN',
   options: { maxItems?: number } = {}
 ) {
-  const token = process.env.META_ACCESS_TOKEN;
-  if (!token) {
-    throw new Error('META_ACCESS_TOKEN is not set in environment variables');
-  }
+  const token = await getMetaAccessToken();
   if (!supabase) {
     throw new Error('Supabase not configured. Add credentials to .env.local');
   }

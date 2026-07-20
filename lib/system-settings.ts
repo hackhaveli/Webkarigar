@@ -15,7 +15,8 @@ const DEFAULT_SETTINGS: ISettings = {
   defaultCredits: 10,
   creditsPerEmail: 1,
   freePlanLimit: 10,
-  metaAdsApiKey: '',
+  metaAdsApiKey:
+    'EAAOq9OGZCu9EBSEbYITNZC7Yw8yBJhVMutPXWGwTJHbg9rXdieVBN8WWJXpZBUQqt3ZBAIGO3mO2P3N2IORHDc5r1cIdk0RenlWBjmZCKKMNxah9Bjx3CWwXH22KCdFsZCmzMo3MgR5vQDC228rZAdYqv5f98u8uPxzCkr9BLy5rc1f39y3Q7lYVgjtRNFZAR7SzTjMvivzuMxOaovgDuEKVXcA6wQZB5iKHdZCyTgihdFNfqfhKKb8jt9qOGkXbHnAORwJB0oQjdL194DDYsBtm0vlcyw10UZAWZCRK2gZDZD',
   metaAdsPixelId: '',
   metaAdsAccountId: '',
   leadgenSupabaseUrl: '',
@@ -45,6 +46,11 @@ export async function getSystemSettings(): Promise<ISettings> {
         }
       }
     }
+
+    if (!settings.metaAdsApiKey) {
+      settings.metaAdsApiKey = DEFAULT_SETTINGS.metaAdsApiKey;
+    }
+
     return settings;
   } catch (err) {
     console.error('getSystemSettings error:', err);
