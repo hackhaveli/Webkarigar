@@ -3,7 +3,14 @@ import { prisma } from '@/lib/prisma';
 import { Button } from '@/components/ui/button';
 import { CheckCircle2, Star, Zap, ChevronRight, Menu } from 'lucide-react';
 import Link from 'next/link';
-import { parse } from 'path';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  robots: {
+    index: false,
+    follow: true,
+  },
+};
 
 export default async function PreviewPage({ params }: { params: Promise<{ business_name: string }> }) {
   const { business_name } = await params;
