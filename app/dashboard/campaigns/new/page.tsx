@@ -512,7 +512,15 @@ export default function NewCampaignPage() {
                 <div key={lead.id} className={`flex items-center space-x-3 p-3 rounded-lg transition-colors border border-transparent hover:border-white/[0.08] ${selectedLeads.includes(lead.id) ? 'bg-primary/5 border-primary/20' : 'hover:bg-white/[0.06]'}`}>
                   <Checkbox className="border-white/20 data-[state=checked]:bg-primary data-[state=checked]:text-white" id={`lead-${lead.id}`} checked={selectedLeads.includes(lead.id)} onCheckedChange={() => toggleLead(lead.id)} />
                   <label htmlFor={`lead-${lead.id}`} className="text-sm cursor-pointer flex-1 flex justify-between items-center text-slate-200">
-                    <span className="font-medium text-white">{lead.name} <span className="text-slate-400 font-normal ml-2">{lead.email}</span></span>
+                    <span className="font-medium text-white flex items-center gap-2">
+                      {lead.name}
+                      <span className="text-slate-400 font-normal">{lead.email}</span>
+                      {lead.isMetaAdLead && (
+                        <Badge className="text-[10px] bg-cyan-500/10 text-cyan-400 border border-cyan-500/20 px-2 py-0.5">
+                          Meta Ad Lead
+                        </Badge>
+                      )}
+                    </span>
                     {lead.previewUrl && <LinkIcon className="h-3 w-3 text-primary" />}
                   </label>
                 </div>

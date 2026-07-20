@@ -88,10 +88,8 @@ export default async function AdminSettingsPage() {
         </div>
       </div>
 
-      {/* Credit System */}
-      <div className="bg-[#111827] border border-white/5 rounded-2xl p-6">
-        <h2 className="text-base font-bold text-white mb-1">Credit System Config</h2>
-        <p className="text-xs text-gray-500 mb-4">Values apply dynamically to new signups and campaign executions.</p>
+      {/* API Keys & Platform Configuration */}
+      <div>
         <AdminSettingsForm />
       </div>
     </div>

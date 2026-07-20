@@ -84,6 +84,37 @@ export default function GeneratedLeadsPage() {
     } finally { setReclassifying(false); }
   };
 
+  const [importing, setImporting] = useState(false);
+
+  const importToOutreach = async (specificLeadId?: string) => {
+    setImporting(true);
+    try {
+      const idsToImport = specificLeadId
+        ? [specificLeadId]
+        : Array.from(selectedIds);
+
+      const res = await fetch('/api/lead-gen/import-to-leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          importAllWithEmail: !specificLeadId && idsToImport.length === 0,
+          leadIds: idsToImport,
+        }),
+      });
+
+      const data = await res.json();
+      if (data.error) throw new Error(data.error);
+
+      toast.success(
+        `Imported ${data.imported} Meta Ad lead(s) with emails & personalized preview links to your Outreach Campaigns!`
+      );
+    } catch (err: any) {
+      toast.error(`Import failed: ${err.message}`);
+    } finally {
+      setImporting(false);
+    }
+  };
+
   const fetchLeads = useCallback(async () => {
     setLoading(true);
     try {
@@ -331,6 +362,10 @@ export default function GeneratedLeadsPage() {
           <Button variant="outline" className="border-white/10 bg-[#0f1422] text-white hover:bg-white/[0.06] h-10" onClick={() => exportCSV('emails')}>
             <Mail className="w-4 h-4 mr-2 text-blue-400" />
             Export Emails
+          </Button>
+          <Button className="bg-gradient-to-r from-emerald-600 to-cyan-600 hover:from-emerald-500 hover:to-cyan-500 text-white h-10 shadow-lg shadow-emerald-600/20 font-bold" onClick={() => importToOutreach()} disabled={importing}>
+            {importing ? <Loader2 className="w-4 h-4 mr-2 animate-spin" /> : <Mail className="w-4 h-4 mr-2 text-amber-300" />}
+            {importing ? 'Importing Leads...' : 'Import to Email Outreach'}
           </Button>
           <Button className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white h-10" asChild>
             <Link href="/dashboard/lead-generation">
@@ -668,6 +703,16 @@ export default function GeneratedLeadsPage() {
                       </td>
                       <td className="p-3 text-right">
                         <div className="flex gap-1 justify-end">
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="h-8 w-8 text-blue-400 hover:text-blue-300 hover:bg-blue-500/10"
+                            onClick={() => importToOutreach(lead.id)}
+                            disabled={importing || (!lead.email && !leadEmail)}
+                            title="Push Lead & Send Personalized Email"
+                          >
+                            <Mail className="w-4 h-4" />
+                          </Button>
                           <Button
                             variant="ghost"
                             size="icon"
