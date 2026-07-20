@@ -6,7 +6,7 @@ import { Toaster } from '@/components/ui/sonner';
 import { SoftwareApplicationJsonLd, OrganizationJsonLd, WebSiteSearchJsonLd } from '@/components/seo/json-ld';
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://webkarigar.vercel.app'),
+  metadataBase: new URL('https://webkarigar.com'),
   title: {
     default: 'WebKarigar | AI Website Personalization & Outreach SaaS',
     template: '%s | WebKarigar',
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
     'Email Campaigns',
     'Website Templates',
   ],
-  authors: [{ name: 'WebKarigar Team', url: 'https://webkarigar.vercel.app' }],
+  authors: [{ name: 'WebKarigar Team', url: 'https://webkarigar.com' }],
   creator: 'WebKarigar',
   publisher: 'WebKarigar',
   formatDetection: {
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     title: 'WebKarigar | AI Website Personalization & Outreach SaaS',
     description:
       'Stop pitching. Start showing. Instantly generate personalized websites for local business leads to skyrocket cold email reply rates.',
-    url: 'https://webkarigar.vercel.app',
+    url: 'https://webkarigar.com',
     siteName: 'WebKarigar',
     locale: 'en_US',
     type: 'website',

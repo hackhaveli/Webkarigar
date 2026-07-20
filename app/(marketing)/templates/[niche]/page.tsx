@@ -54,9 +54,9 @@ export default async function NicheTemplatePage({ params }: NicheTemplatePagePro
       <FaqPageJsonLd faqs={faqs} />
       <BreadcrumbJsonLd
         items={[
-          { name: 'Home', url: 'https://webkarigar.vercel.app' },
-          { name: 'Templates', url: 'https://webkarigar.vercel.app/templates' },
-          { name: config.label, url: `https://webkarigar.vercel.app/templates/${niche}` },
+          { name: 'Home', url: 'https://webkarigar.com' },
+          { name: 'Templates', url: 'https://webkarigar.com/templates' },
+          { name: config.label, url: `https://webkarigar.com/templates/${niche}` },
         ]}
       />
 

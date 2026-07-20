@@ -2,7 +2,7 @@ import { MetadataRoute } from 'next';
 import { NICHE_CONFIG } from '@/lib/marketplace-templates';
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const baseUrl = 'https://webkarigar.vercel.app';
+  const baseUrl = 'https://webkarigar.com';
   const lastModified = new Date();
 
   // Static Marketing Pages

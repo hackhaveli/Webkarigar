@@ -88,8 +88,8 @@ export default async function FeaturePage({ params }: FeaturePageProps) {
       <FaqPageJsonLd faqs={feat.faqs} />
       <BreadcrumbJsonLd
         items={[
-          { name: 'Home', url: 'https://webkarigar.vercel.app' },
-          { name: feat.title, url: `https://webkarigar.vercel.app/features/${feature}` },
+          { name: 'Home', url: 'https://webkarigar.com' },
+          { name: feat.title, url: `https://webkarigar.com/features/${feature}` },
         ]}
       />
 

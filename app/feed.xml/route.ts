@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 
 export async function GET() {
-  const baseUrl = 'https://webkarigar.vercel.app';
+  const baseUrl = 'https://webkarigar.com';
 
   const feedItems = [
     {

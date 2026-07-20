@@ -92,8 +92,8 @@ export default async function CompetitorPage({ params }: CompetitorPageProps) {
       <FaqPageJsonLd faqs={comp.faqs} />
       <BreadcrumbJsonLd
         items={[
-          { name: 'Home', url: 'https://webkarigar.vercel.app' },
-          { name: `WebKarigar vs ${comp.name}`, url: `https://webkarigar.vercel.app/vs/${competitor}` },
+          { name: 'Home', url: 'https://webkarigar.com' },
+          { name: `WebKarigar vs ${comp.name}`, url: `https://webkarigar.com/vs/${competitor}` },
         ]}
       />
 

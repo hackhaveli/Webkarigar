@@ -42,8 +42,8 @@ export default function ToolPage({ params }: ToolPageProps) {
         label: 'Enter Prospect Business Name:',
         placeholder: 'e.g. Acme Dental & Orthodontics',
         results: [
-          `webkarigar.vercel.app/preview?client=${cleanSlug || 'prospect'}`,
-          `webkarigar.vercel.app/demo/gym?clientName=${encodeURIComponent(inputVal || 'Prospect')}`,
+          `webkarigar.com/preview?client=${cleanSlug || 'prospect'}`,
+          `webkarigar.com/demo/gym?clientName=${encodeURIComponent(inputVal || 'Prospect')}`,
           `https://client-preview.com/${cleanSlug || 'prospect'}`,
         ],
       };

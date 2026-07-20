@@ -59,9 +59,9 @@ export default async function GuideSlugPage({ params }: GuideSlugPageProps) {
     <main className="min-h-screen bg-[#07090e] text-slate-100 py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       <BreadcrumbJsonLd
         items={[
-          { name: 'Home', url: 'https://webkarigar.vercel.app' },
-          { name: 'Guides', url: 'https://webkarigar.vercel.app/guides' },
-          { name: guide.title, url: `https://webkarigar.vercel.app/guides/${slug}` },
+          { name: 'Home', url: 'https://webkarigar.com' },
+          { name: 'Guides', url: 'https://webkarigar.com/guides' },
+          { name: guide.title, url: `https://webkarigar.com/guides/${slug}` },
         ]}
       />
 

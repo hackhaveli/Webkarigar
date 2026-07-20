@@ -78,7 +78,7 @@ export default function DemoPage() {
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-4 border-t border-white/10">
             <div className="text-xs text-slate-400 flex items-center gap-2">
               <Globe className="w-4 h-4 text-cyan-400" />
-              Preview URL: <span className="font-mono text-violet-300">webkarigar.vercel.app/preview?client={generatedSlug}</span>
+              Preview URL: <span className="font-mono text-violet-300">webkarigar.com/preview?client={generatedSlug}</span>
             </div>
 
             <Button

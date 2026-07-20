@@ -11,7 +11,7 @@ export interface SoftwareAppSchemaProps {
 export function SoftwareApplicationJsonLd({
   name = 'WebKarigar',
   description = 'AI website personalization and outreach automation SaaS for freelancers, agencies, and web developers.',
-  url = 'https://webkarigar.vercel.app',
+  url = 'https://webkarigar.com',
   price = '0',
   priceCurrency = 'USD',
 }: SoftwareAppSchemaProps) {
@@ -48,8 +48,8 @@ export function OrganizationJsonLd() {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'WebKarigar',
-    url: 'https://webkarigar.vercel.app',
-    logo: 'https://webkarigar.vercel.app/webkarigar-white.png',
+    url: 'https://webkarigar.com',
+    logo: 'https://webkarigar.com/webkarigar-white.png',
     sameAs: [
       'https://github.com/hackhaveli/Webkarigar',
       'https://twitter.com/webkarigar',
@@ -74,10 +74,10 @@ export function WebSiteSearchJsonLd() {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
     name: 'WebKarigar',
-    url: 'https://webkarigar.vercel.app',
+    url: 'https://webkarigar.com',
     potentialAction: {
       '@type': 'SearchAction',
-      target: 'https://webkarigar.vercel.app/search?q={search_term_string}',
+      target: 'https://webkarigar.com/search?q={search_term_string}',
       'query-input': 'required name=search_term_string',
     },
   };

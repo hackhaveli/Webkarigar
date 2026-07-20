@@ -98,6 +98,7 @@ export function LiveDemoSection() {
               className="absolute inset-0 w-full h-full object-contain bg-black"
               src="/product_demo.mp4"
               poster="/thumbnail.png"
+              preload="none"
               muted
               playsInline
             ></video>

@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 
 export default function robots(): MetadataRoute.Robots {
-  const baseUrl = 'https://webkarigar.vercel.app';
+  const baseUrl = 'https://webkarigar.com';
 
   return {
     rules: [

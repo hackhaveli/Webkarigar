@@ -50,8 +50,8 @@ export default function ToolsHubPage() {
     <main className="min-h-screen bg-[#07090e] text-slate-100 py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
       <BreadcrumbJsonLd
         items={[
-          { name: 'Home', url: 'https://webkarigar.vercel.app' },
-          { name: 'Tools', url: 'https://webkarigar.vercel.app/tools' },
+          { name: 'Home', url: 'https://webkarigar.com' },
+          { name: 'Tools', url: 'https://webkarigar.com/tools' },
         ]}
       />
 
