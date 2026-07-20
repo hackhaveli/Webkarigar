@@ -1,0 +1,93 @@
+{
+  "gym": {
+    "label": "Gym / Fitness",
+    "templateBases": ["webhypegym-1", "webhypegym-2", "webhypegym-3"],
+    "templateDomain": "vercel.app",
+    "messageTemplate": "Sorry for bothering u but I have a deal for u. I have designed 3 free website for u also a logo + mobile app + 2 free ads graphics + whatsapp automation in just ₹5000 deal. Let me know if u want to see demo",
+    "searchKeywords": ["gym", "fitness center", "fitness studio", "personal training", "crossfit"]
+  },
+  "salon": {
+    "label": "Salon / Beauty",
+    "templateBases": ["webhypesalon-1", "webhypesalon-2", "webhypesalon-3"],
+    "templateDomain": "vercel.app",
+    "messageTemplate": "Sorry for bothering u but I have a deal for u. I have designed 3 free website for u also a logo + mobile app + 2 free ads graphics + whatsapp automation in just ₹5000 deal. Let me know if u want to see demo",
+    "searchKeywords": ["salon", "beauty studio", "hair salon", "nail salon", "spa"]
+  },
+  "coaching": {
+    "label": "Coaching / Consulting",
+    "templateBases": ["webhypecoach-1", "webhypecoach-2", "webhypecoach-3"],
+    "templateDomain": "vercel.app",
+    "messageTemplate": "Sorry for bothering u but I have a deal for u. I have designed 3 free website for u also a logo + mobile app + 2 free ads graphics + whatsapp automation in just ₹5000 deal. Let me know if u want to see demo",
+    "searchKeywords": ["life coach", "business coach", "consultant", "coaching", "mentorship"]
+  },
+  "dentist": {
+    "label": "Dentist / Dental Clinic",
+    "templateBases": ["webhypedentist-1", "webhypedentist-2", "webhypedentist-3"],
+    "templateDomain": "vercel.app",
+    "messageTemplate": "Hi {{business_name}} team! I noticed you are running Meta ads but don't have a modern website. I designed 3 custom dental clinic website designs + logo + online booking system demo for you. Special launch deal for ₹5000. Let me know if you want to see the links!",
+    "searchKeywords": ["dentist", "dental clinic", "teeth whitening", "orthodontist", "dental care"]
+  },
+  "chiropractor": {
+    "label": "Chiropractor",
+    "templateBases": ["webhypechiro-1", "webhypechiro-2", "webhypechiro-3"],
+    "templateDomain": "vercel.app",
+    "messageTemplate": "Hello! I saw your active ads for chiropractic care. I built 3 custom chiropractor website demos + booking automation for you. Let me know if I can drop the links here!",
+    "searchKeywords": ["chiropractor", "chiropractic", "back pain relief", "spinal adjustment"]
+  },
+  "restaurant": {
+    "label": "Restaurant / Cafe",
+    "templateBases": ["webhyperestaurant-1", "webhyperestaurant-2", "webhyperestaurant-3"],
+    "templateDomain": "vercel.app",
+    "messageTemplate": "Hi {{business_name}}! We love your menu. I designed 3 custom cafe/restaurant site demos + mobile-friendly digital menu system for you in ₹5000. Want to see the demo links?",
+    "searchKeywords": ["restaurant", "cafe", "bistro", "diner", "pizzeria", "sushi bar"]
+  },
+  "realestate": {
+    "label": "Real Estate Agency",
+    "templateBases": ["webhyperealestate-1", "webhyperealestate-2", "webhyperealestate-3"],
+    "templateDomain": "vercel.app",
+    "messageTemplate": "Hello! I noticed your property ads. I set up 3 custom real estate landing pages + property listing board demos for you. Can I share the links to see if they fit your brand?",
+    "searchKeywords": ["real estate agent", "realtor", "property management", "homes for sale"]
+  },
+  "plumbing": {
+    "label": "Plumbing Services",
+    "templateBases": ["webhypeplumbing-1", "webhypeplumbing-2", "webhypeplumbing-3"],
+    "templateDomain": "vercel.app",
+    "messageTemplate": "Hi there! I saw you are running plumbing ads in your city. I put together 3 custom plumbing business websites + online service booking form demos for you. Let me know if you want to check them out!",
+    "searchKeywords": ["plumber", "plumbing service", "leak repair", "emergency plumber"]
+  },
+  "electrician": {
+    "label": "Electrician",
+    "templateBases": ["webhypeelectrician-1", "webhypeelectrician-2", "webhypeelectrician-3"],
+    "templateDomain": "vercel.app",
+    "messageTemplate": "Hi {{business_name}}! I built 3 professional electrical service site designs + logo + estimate calculator demos for you. All in just ₹5000 deal. Interested in checking them out?",
+    "searchKeywords": ["electrician", "electrical contractor", "electrical repair", "wiring"]
+  },
+  "cleaning": {
+    "label": "Cleaning Services",
+    "templateBases": ["webhypecleaning-1", "webhypecleaning-2", "webhypecleaning-3"],
+    "templateDomain": "vercel.app",
+    "messageTemplate": "Hello! I noticed your ads for house/office cleaning. I designed 3 custom cleaning agency websites + booking schedule demos for you. All for only ₹5000. Let me know if you want to see the demos!",
+    "searchKeywords": ["cleaning service", "house cleaning", "office cleaning", "maid service"]
+  },
+  "bakery": {
+    "label": "Bakery / Cake Shop",
+    "templateBases": ["webhypebakery-1", "webhypebakery-2", "webhypebakery-3"],
+    "templateDomain": "vercel.app",
+    "messageTemplate": "Hi! We saw your amazing cakes and breads. I built 3 custom bakery website designs + online pre-order form demos for you. Let me know if you'd like to see the demo links!",
+    "searchKeywords": ["bakery", "cake shop", "pastry", "donuts", "fresh bread"]
+  },
+  "photography": {
+    "label": "Photography",
+    "templateBases": ["webhypephoto-1", "webhypephoto-2", "webhypephoto-3"],
+    "templateDomain": "vercel.app",
+    "messageTemplate": "Hi {{business_name}}! Love your photos. I designed 3 custom portfolio website designs + client scheduler demos for you for ₹5000. Let me know if I can send you the links to check out!",
+    "searchKeywords": ["photographer", "wedding photography", "portrait studio", "videographer"]
+  },
+  "lawyer": {
+    "label": "Lawyer / Law Firm",
+    "templateBases": ["webhypelaw-1", "webhypelaw-2", "webhypelaw-3"],
+    "templateDomain": "vercel.app",
+    "messageTemplate": "Hello! I saw your legal service ads. I put together 3 premium law firm website + free consultation booking form demos for you. Let me know if you'd like to check them out!",
+    "searchKeywords": ["lawyer", "law firm", "attorney", "legal services", "divorce lawyer"]
+  }
+}

@@ -1,0 +1,54 @@
+# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+
+# dependencies
+/node_modules
+/.pnp
+.pnp.js
+
+# testing
+/coverage
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+Thumbs.db
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# local env files
+.env*.local
+.env
+.env.development
+.env.production
+.env.test
+
+# vercel
+.vercel
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts
+
+# CSV / data dump files
+*.csv
+
+# One-time admin/seed scripts (keep seed-admin.js for reference but exclude private CSVs)
+# test-db2.js    # deleted
+# update_credits.js    # deleted
+# update-admins.js     # deleted
+
+# User-specific / IDE
+.agents/
+skills-lock.json
+.agent/
