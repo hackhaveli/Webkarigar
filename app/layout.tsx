@@ -52,6 +52,11 @@ export const metadata: Metadata = {
       'Stop pitching. Start showing. Generate personalized website previews for business leads before sending outreach.',
     creator: '@webkarigar',
   },
+  verification: {
+    other: {
+      'msvalidate.01': '151A7039106A5922A3A46D954AC488E5',
+    },
+  },
   robots: {
     index: true,
     follow: true,

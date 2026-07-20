@@ -8,17 +8,18 @@ import { AdminUserActions } from '@/components/admin/AdminUserActions';
 
 const ADMIN_EMAILS = ['coderrohit2927@gmail.com'];
 
-export default async function AdminUsersPage({ searchParams }: { searchParams: { q?: string; status?: string; plan?: string; page?: string } }) {
+export default async function AdminUsersPage({ searchParams }: { searchParams: Promise<{ q?: string; status?: string; plan?: string; page?: string }> }) {
   const session = await getServerSession(authOptions);
   if (!session?.user?.email) redirect('/login');
   if (!ADMIN_EMAILS.includes(session.user.email)) redirect('/dashboard');
 
-  const page = parseInt(searchParams.page || '1');
+  const resolvedParams = await searchParams;
+  const page = parseInt(resolvedParams.page || '1');
   const limit = 20;
   const skip = (page - 1) * limit;
-  const q = searchParams.q || '';
-  const statusFilter = searchParams.status || '';
-  const planFilter = searchParams.plan || '';
+  const q = resolvedParams.q || '';
+  const statusFilter = resolvedParams.status || '';
+  const planFilter = resolvedParams.plan || '';
 
   const where: any = {};
   if (q) { where.OR = [{ email: { contains: q, mode: 'insensitive' } }, { name: { contains: q, mode: 'insensitive' } }]; }

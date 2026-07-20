@@ -102,3 +102,25 @@ model Payment {
   paidAt            DateTime?
   user              User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
+
+model BlogPost {
+  id              String   @id @default(cuid())
+  slug            String   @unique
+  title           String
+  excerpt         String
+  content         String
+  coverImage      String?
+  category        String   @default("Client Acquisition")
+  readingTime     String   @default("5 min read")
+  tags            String[] @default([])
+  featured        Boolean  @default(false)
+  metaTitle       String?
+  metaDescription String?
+  keywords        String[] @default([])
+  authorName      String   @default("Rohit Sharma")
+  authorRole      String   @default("Founder & CEO, WebKarigar")
+  authorAvatar    String?
+  publishedAt     DateTime @default(now())
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}

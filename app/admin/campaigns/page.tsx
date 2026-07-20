@@ -9,17 +9,18 @@ import { AdminCampaignActions } from '@/components/admin/AdminCampaignActions';
 const ADMIN_EMAILS = ['coderrohit2927@gmail.com'];
 
 export default async function AdminCampaignsPage({ searchParams }: {
-  searchParams: { q?: string; status?: string; page?: string }
+  searchParams: Promise<{ q?: string; status?: string; page?: string }>
 }) {
   const session = await getServerSession(authOptions);
   if (!session?.user?.email) redirect('/login');
   if (!ADMIN_EMAILS.includes(session.user.email)) redirect('/dashboard');
 
-  const page = parseInt(searchParams.page || '1');
+  const resolvedParams = await searchParams;
+  const page = parseInt(resolvedParams.page || '1');
   const limit = 25;
   const skip = (page - 1) * limit;
-  const q = searchParams.q || '';
-  const statusFilter = searchParams.status || '';
+  const q = resolvedParams.q || '';
+  const statusFilter = resolvedParams.status || '';
 
   const where: any = {};
   if (q) where.OR = [

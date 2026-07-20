@@ -1,5 +1,6 @@
 import { MetadataRoute } from 'next';
 import { NICHE_CONFIG } from '@/lib/marketplace-templates';
+import { BLOG_POSTS } from '@/lib/blog-data';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = 'https://webkarigar.com';
@@ -10,11 +11,20 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${baseUrl}`, lastModified, changeFrequency: 'daily', priority: 1.0 },
     { url: `${baseUrl}/demo`, lastModified, changeFrequency: 'daily', priority: 0.95 },
     { url: `${baseUrl}/templates`, lastModified, changeFrequency: 'daily', priority: 0.9 },
+    { url: `${baseUrl}/blog`, lastModified, changeFrequency: 'daily', priority: 0.9 },
     { url: `${baseUrl}/tools`, lastModified, changeFrequency: 'weekly', priority: 0.85 },
     { url: `${baseUrl}/docs`, lastModified, changeFrequency: 'weekly', priority: 0.8 },
     { url: `${baseUrl}/changelog`, lastModified, changeFrequency: 'weekly', priority: 0.75 },
     { url: `${baseUrl}/roadmap`, lastModified, changeFrequency: 'weekly', priority: 0.7 },
   ];
+
+  // Blog Article Routes (/blog/[slug])
+  const blogRoutes: MetadataRoute.Sitemap = BLOG_POSTS.map((post) => ({
+    url: `${baseUrl}/blog/${post.slug}`,
+    lastModified: new Date(post.publishedAt),
+    changeFrequency: 'weekly',
+    priority: 0.85,
+  }));
 
   // Niche Interactive Demos (/demo/[niche])
   const niches = Object.keys(NICHE_CONFIG);
@@ -71,6 +81,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     ...staticRoutes,
+    ...blogRoutes,
     ...demoRoutes,
     ...templateRoutes,
     ...featureRoutes,

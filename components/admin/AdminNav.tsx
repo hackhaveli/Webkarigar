@@ -4,11 +4,12 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import {
   LayoutDashboard, Users, Megaphone, FileCode2,
-  Database, BarChart3, Settings, ChevronRight, CreditCard,
+  Database, BarChart3, Settings, ChevronRight, CreditCard, Newspaper,
 } from 'lucide-react';
 
 const NAV_ITEMS = [
   { href: '/admin', label: 'Dashboard', icon: LayoutDashboard, exact: true },
+  { href: '/admin/blogs', label: 'Blog Posts', icon: Newspaper },
   { href: '/admin/users', label: 'Users', icon: Users },
   { href: '/admin/campaigns', label: 'Campaigns', icon: Megaphone },
   { href: '/admin/templates', label: 'Marketplace Templates', icon: FileCode2 },

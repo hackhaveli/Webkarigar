@@ -73,11 +73,11 @@ export function Footer() {
           <div>
             <h3 className="font-bold text-xs uppercase tracking-wider text-slate-300 mb-3">Documentation & Transparency</h3>
             <ul className="space-y-2 text-xs">
+              <li><Link href="/blog" className="text-slate-400 hover:text-white transition-colors">Blog & Playbooks</Link></li>
               <li><Link href="/docs" className="text-slate-400 hover:text-white transition-colors">Documentation</Link></li>
               <li><Link href="/docs/multi-smtp-rotation" className="text-slate-400 hover:text-white transition-colors">SMTP Setup Guide</Link></li>
               <li><Link href="/changelog" className="text-slate-400 hover:text-white transition-colors">Changelog</Link></li>
               <li><Link href="/roadmap" className="text-slate-400 hover:text-white transition-colors">Product Roadmap</Link></li>
-              <li><Link href="/guides/how-to-get-web-design-clients" className="text-slate-400 hover:text-white transition-colors">Client Playbook</Link></li>
             </ul>
           </div>
         </div>
@@ -85,6 +85,7 @@ export function Footer() {
         <div className="pt-6 border-t border-white/10 flex flex-col md:flex-row justify-between items-center text-xs text-slate-500">
           <p>&copy; {new Date().getFullYear()} WebKarigar. All rights reserved.</p>
           <div className="flex space-x-4 mt-2 md:mt-0">
+            <Link href="/blog" className="hover:text-slate-300">Blog</Link>
             <Link href="/docs" className="hover:text-slate-300">Docs</Link>
             <Link href="/changelog" className="hover:text-slate-300">Changelog</Link>
             <Link href="/roadmap" className="hover:text-slate-300">Roadmap</Link>

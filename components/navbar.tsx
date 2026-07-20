@@ -239,8 +239,9 @@ function NavLinks({
   const links = [
     { href: "#features", id: "features", label: "Features" },
     { href: "#how-it-works", id: "how-it-works", label: "How It Works" },
-    { href: "/dashboard/templates", id: "", label: "Templates" },
-    { href: "/dashboard/lead-generation", id: "", label: "Lead Gen" },
+    { href: "/templates", id: "", label: "Templates" },
+    { href: "/blog", id: "", label: "Blog" },
+    { href: "/tools", id: "", label: "Tools" },
     { href: "#faq", id: "faq", label: "FAQ" },
   ];
 
