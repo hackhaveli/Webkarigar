@@ -124,3 +124,44 @@ model BlogPost {
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 }
+
+model RawAd {
+  id                 String    @id @default(cuid())
+  niche              String
+  keyword            String
+  country            String    @default("IN")
+  hash               String    @unique
+  pageId             String?
+  pageName           String?
+  adText             String?
+  ctaLink            String?
+  publisherPlatforms String[]  @default([])
+  adCreationTime     DateTime?
+  rawJson            Json?
+  createdAt          DateTime  @default(now())
+  aiLeads            AILead[]
+}
+
+model AILead {
+  id              String   @id @default(cuid())
+  rawAdId         String?
+  rawAd           RawAd?   @relation(fields: [rawAdId], references: [id], onDelete: SetNull)
+  niche           String
+  businessName    String
+  phone           String?
+  email           String?
+  emails          String[] @default([])
+  city            String?
+  hasWebsite      Boolean  @default(false)
+  ctaLink         String?
+  adText          String?
+  isLead          Boolean  @default(true)
+  confidence      String   @default("medium")
+  rejectionReason String?
+  slug            String?
+  demoLinks       String[] @default([])
+  messageDraft    String?
+  status          String   @default("pending")
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}

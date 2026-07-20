@@ -1,122 +1,94 @@
+import { prisma } from '../prisma';
 import { supabase } from './supabase';
-import { NICHES } from './constants';
 
-export function slugify(name: string | null): string {
-  return (name || 'business')
+function generateSlug(businessName: string): string {
+  return businessName
     .toLowerCase()
     .trim()
-    .replace(/[^\w\s-]/g, '')
-    .replace(/[\s_]+/g, '-')
-    .replace(/-+/g, '-')
-    .replace(/^-|-$/g, '')
-    .substring(0, 50);
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '');
 }
 
-export function cleanPhone(phone: string | null): string | null {
-  if (!phone) return null;
+function generateDemoLinks(niche: string, businessName: string): string[] {
+  const slug = generateSlug(businessName);
+  const baseUrl = 'https://webkarigar.com';
 
-  let cleaned = phone.replace(/[\s\-\(\)\.]/g, '');
-
-  if (cleaned.startsWith('+')) {
-    cleaned = cleaned.substring(1);
-  }
-
-  if (cleaned.startsWith('0')) {
-    cleaned = '91' + cleaned.substring(1);
-  }
-
-  if (/^\d{10}$/.test(cleaned)) {
-    cleaned = '91' + cleaned;
-  }
-
-  if (!/^\d{10,15}$/.test(cleaned)) {
-    return null;
-  }
-
-  return cleaned;
+  return [
+    `${baseUrl}/preview/${slug}`,
+    `${baseUrl}/demo/${niche}`,
+    `${baseUrl}/templates/${niche}`,
+  ];
 }
 
-export function generateDemoLinks(slug: string, nicheConfig: any): string[] {
-  return nicheConfig.templateBases.map(
-    (base: string) => `https://${base}.${nicheConfig.templateDomain}/${slug}`
-  );
+function generateMessageDraft(niche: string, businessName: string, demoLinks: string[]): string {
+  const primaryDemo = demoLinks[0] || 'https://webkarigar.com/demo';
+
+  return `Hey Team ${businessName}! 👋
+
+I noticed your ads on Instagram & Facebook. We created a live customized website preview specifically designed for your ${niche} business:
+
+👉 ${primaryDemo}
+
+Would you be open to launching this live to turn your ad traffic into 3x more booked clients this week?
+
+Best regards,
+Rohit Sharma
+Founder, WebKarigar`;
 }
 
-export function generateMessageDraft(lead: any, demoLinks: string[], nicheConfig: any): string {
-  let message = nicheConfig.messageTemplate;
-  message = message.replace(/\{\{business_name\}\}/g, lead.business_name || 'there');
-
-  demoLinks.forEach((link, i) => {
-    message = message.replace(`{{demo_link_${i + 1}}}`, link);
+export async function enrichLeads(niche: string) {
+  // 1. Fetch leads for this niche from Prisma PostgreSQL
+  const leads = await prisma.aILead.findMany({
+    where: { niche, isLead: true },
   });
-
-  message = message.replace(/\{\{demo_link_\d+\}\}/g, '');
-  return message.trim();
-}
-
-export async function enrichLead(lead: any, niche: string) {
-  const nicheConfig = (NICHES as any)[niche];
-  if (!nicheConfig) {
-    throw new Error(`Unknown niche: ${niche}`);
-  }
-
-  const slug = slugify(lead.business_name);
-  const demoLinks = generateDemoLinks(slug, nicheConfig);
-  const cleanedPhone = cleanPhone(lead.phone);
-  const messageDraft = generateMessageDraft(lead, demoLinks, nicheConfig);
-
-  const updates = {
-    slug,
-    demo_links: demoLinks,
-    phone: cleanedPhone || lead.phone,
-    message_draft: messageDraft,
-  };
-
-  const { error } = await (supabase
-    .from('leads') as any)
-    .update(updates)
-    .eq('id', lead.id);
-
-  if (error) {
-    throw new Error(`Failed to update lead ${lead.id}: ${error.message}`);
-  }
-
-  return { ...lead, ...updates };
-}
-
-export async function enrichAllLeads(niche: string) {
-  if (!supabase) {
-    throw new Error('Supabase not configured. Add credentials to .env.local');
-  }
-
-  const { data: leads, error: fetchError } = await (supabase
-    .from('leads') as any)
-    .select('*')
-    .eq('niche', niche)
-    .eq('is_lead', true)
-    .neq('confidence', 'low')
-    .is('slug', null);
-
-  if (fetchError) throw new Error(`Failed to fetch leads: ${fetchError.message}`);
-
-  console.log(`Enriching ${leads.length} leads for niche="${niche}"`);
 
   if (leads.length === 0) {
     return { total: 0, enriched: 0, errors: 0 };
   }
 
-  let enriched = 0;
-  let errors = 0;
+  let enrichedCount = 0;
+  let errorCount = 0;
 
   for (const lead of leads) {
     try {
-      await enrichLead(lead, niche);
-      enriched++;
-    } catch (err: any) {
-      console.error(`Error enriching lead "${lead.business_name}": ${err.message}`);
-      errors++;
+      const slug = generateSlug(lead.businessName);
+      const demoLinks = generateDemoLinks(lead.niche, lead.businessName);
+      const messageDraft = generateMessageDraft(lead.niche, lead.businessName, demoLinks);
+
+      await prisma.aILead.update({
+        where: { id: lead.id },
+        data: {
+          slug,
+          demoLinks,
+          messageDraft,
+        },
+      });
+
+      // Sync to Supabase if available
+      try {
+        if (supabase && (supabase as any).from) {
+          await (supabase.from('leads') as any)
+            .update({
+              slug,
+              demo_links: demoLinks,
+              message_draft: messageDraft,
+            })
+            .eq('id', lead.id);
+        }
+      } catch (e) {
+        // ignore
+      }
+
+      enrichedCount++;
+    } catch (err) {
+      console.error(`Enrich error for lead ${lead.id}:`, err);
+      errorCount++;
     }
   }
 
-  return { total: leads.length, enriched, errors };
+  return {
+    total: leads.length,
+    enriched: enrichedCount,
+    errors: errorCount,
+  };
 }

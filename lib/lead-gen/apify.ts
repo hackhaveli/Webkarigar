@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import { prisma } from '../prisma';
 import { supabase } from './supabase';
 import { getSystemSettings } from '../system-settings';
 
@@ -38,10 +39,6 @@ export async function scrapeAndStore(
   options: { maxItems?: number } = {}
 ) {
   const token = await getMetaAccessToken();
-  if (!supabase) {
-    throw new Error('Supabase not configured. Add credentials to .env.local');
-  }
-
   let totalScraped = 0;
   let newCount = 0;
   let dupCount = 0;
@@ -106,13 +103,12 @@ export async function scrapeAndStore(
 
         const hash = createAdHash(pageId, adText);
 
-        const { data: existing } = await (supabase
-          .from('raw_ads') as any)
-          .select('id')
-          .eq('hash', hash)
-          .maybeSingle();
+        // 1. Check existing in Prisma PostgreSQL
+        const existingPrisma = await prisma.rawAd.findUnique({
+          where: { hash },
+        });
 
-        if (existing) {
+        if (existingPrisma) {
           dupCount++;
           continue;
         }
@@ -121,56 +117,62 @@ export async function scrapeAndStore(
           ctaLink = `https://${ctaLink}`;
         }
 
-        const row = {
+        const adRow = {
           niche,
-          page_id: pageId,
-          page_name: item.page_name || '',
-          ad_text: adText,
-          cta_link: ctaLink,
-          cta_type: item.ad_creative_link_titles?.[0] || '',
-          ad_start_date: item.ad_delivery_start_time || null,
-          ad_snapshot_url: item.ad_snapshot_url || '',
+          keyword,
           country,
-          city: '',
-          platform: (item.publisher_platforms || []).join(','),
-          impressions: '',
-          spend: '',
           hash,
-          raw_json: item,
+          pageId,
+          pageName,
+          adText,
+          ctaLink,
+          publisherPlatforms: item.publisher_platforms || [],
+          adCreationTime: item.ad_creation_time ? new Date(item.ad_creation_time) : null,
+          rawJson: item,
         };
 
-        const { error } = await (supabase.from('raw_ads') as any).insert(row);
-        if (error) {
-          if (error.code === '23505') {
-            dupCount++;
-          } else {
-            console.error(`Error inserting ad: ${error.message}`);
+        // Save to Prisma PostgreSQL
+        await prisma.rawAd.create({
+          data: adRow,
+        });
+
+        // Optionally save to Supabase if valid client exists
+        try {
+          if (supabase && (supabase as any).from) {
+            await (supabase.from('raw_ads') as any).insert({
+              niche,
+              keyword,
+              country,
+              hash,
+              page_id: pageId,
+              page_name: pageName,
+              ad_text: adText,
+              cta_link: ctaLink,
+              publisher_platforms: item.publisher_platforms || [],
+              ad_creation_time: item.ad_creation_time,
+              raw_json: item,
+            });
           }
-        } else {
-          newCount++;
+        } catch (sbErr) {
+          // Ignore Supabase error if not set
         }
+
+        newCount++;
       }
-    } catch (err) {
-      console.error(`Fetch failed for keyword "${keyword}":`, err);
+    } catch (err: any) {
+      console.error(`Fetch error for keyword "${keyword}":`, err.message);
     }
-    await new Promise((resolve) => setTimeout(resolve, 1500));
   }
 
-  const stats = { total: totalScraped, new: newCount, duplicates: dupCount };
-  console.log(`Meta API Results:`, stats);
-  return stats;
-}
+  // Get total count for THIS NICHE only
+  const nicheTotalCount = await prisma.rawAd.count({
+    where: { niche },
+  });
 
-export async function triggerScrape(
-  niche: string,
-  keywords: string[] = [],
-  country = 'IN',
-  options: { maxItems?: number } = {}
-) {
-  const stats = await scrapeAndStore(niche, keywords, country, options);
-  return { runId: 'meta_api_run', datasetId: 'meta_api_dataset', stats };
-}
-
-export async function fetchAndStoreResults(_datasetId: string, _niche: string) {
-  return { total: 0, new: 0, duplicates: 0 };
+  return {
+    scraped: totalScraped,
+    newCount,
+    dupCount,
+    totalCount: nicheTotalCount,
+  };
 }

@@ -78,8 +78,15 @@ export default function LeadGenerationPipelinePage() {
       });
       const data = await res.json();
       if (data.error) throw new Error(data.error);
-      setScrapeResult({ success: true, stats: data.stats });
-      toast.success(`Scraped ${data.stats.new} new ads!`);
+      setScrapeResult({
+        success: true,
+        stats: {
+          total: data.stats.totalCount !== undefined ? data.stats.totalCount : data.stats.scraped,
+          new: data.stats.newCount !== undefined ? data.stats.newCount : data.stats.new,
+          duplicates: data.stats.dupCount !== undefined ? data.stats.dupCount : data.stats.duplicates,
+        },
+      });
+      toast.success(`Scraped ${data.stats.newCount ?? data.stats.new ?? 0} new ads for ${niche}!`);
     } catch (err: any) {
       setScrapeResult({ success: false, error: err.message });
       toast.error(`Scrape failed: ${err.message}`);
